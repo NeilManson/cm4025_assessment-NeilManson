@@ -1,0 +1,26 @@
+{
+  "name": "ews_neil_1712991",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobertGordonUniversity/cm4025_assessment-NeilManson.git"
+  },
+  "author": "Neil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RobertGordonUniversity/cm4025_assessment-NeilManson/issues"
+  },
+  "homepage": "https://github.com/RobertGordonUniversity/cm4025_assessment-NeilManson#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "session": "^0.1.0"
+  }
+}
