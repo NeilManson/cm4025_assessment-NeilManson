@@ -10,32 +10,32 @@ const UserSchema = new mongoose.Schema({
 });
 
 // from http://stackoverflow.com/questions/14588032/mongoose-password-hashing
-UserSchema.pre('save', function (next) {
-    var user = this;
+UserSchema.pre("save", function (next) {
+    const user = this
+  
+    if (this.isModified("password") || this.isNew) {
+      bcrypt.genSalt(10, function (saltError, salt) {
+        if (saltError) {
+          return next(saltError)
+        } else {
+          bcrypt.hash(user.password, salt, function(hashError, hash) {
+            if (hashError) {
+              return next(hashError)
+            }
+  
+            user.password = hash
+            next()
+          })
+        }
+      })
+    } else {
+      return next()
+    }
+  })
 
-    //only hash the password if it has been modified (or is new)
-    if(!user.isModified('password')) return next();
-
-    // generate a salt
-    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-        if (err) return next(err);
-
-        //hash the password using our salt
-        bcrypt.hash(user.password, salt, function (err, hash) {
-            if (err) return next(err);
-
-            //override the cleartext password with the hashed one
-            user.password = hashnext()
-        });
-    });
-});
-
-UserSchema.methods.comparePassword = function (candidatePassword, callback) {
-    bcrypt.compare(candidatePassword, this.password, function (err, isMatch){
-        if (err) return callback(err);
-        callback(undefined, isMatch);
-    });
-};
+  UserSchema.methods.validatePassword = function validatePassword(data) {
+    return bcrypt.compare(data, this.password);
+  };
 
 const User = mongoose.model('User', UserSchema)
 module.exports = User
