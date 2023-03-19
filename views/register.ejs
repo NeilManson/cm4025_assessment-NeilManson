@@ -15,7 +15,7 @@
                       <div class="col-md-6 col-lg-7 d-flex align-items-center">
                         <div class="card-body p-4 p-lg-5 text-black">
           
-                          <form id="signInForm" action="/doRegister" method="POST">
+                          <form id="signInForm" action="/auth/register" method="POST">
           
                             <div class="d-flex align-items-center mb-3 pb-1">
                               <i class="fas fa-cubes fa-2x me-3" style="color: black;"></i>
@@ -26,11 +26,11 @@
           
                             <div class="form-outline mb-4">
                               <label class="form-label" for="email">Email address</label>
-                              <input type="email" id="email" name="email" class="form-control form-control-lg" />
+                              <input type="email" id="email" name="username" class="form-control form-control-lg" />
                               
                             </div>
 
-                            <div class="form-outline mb-4">
+                            <!-- <div class="form-outline mb-4">
                                 <label class="form-label" for="firstname">First Name</label>
                                 <input type="text" id="firstname" name="firstname" class="form-control form-control-lg" />
                                 
@@ -40,7 +40,7 @@
                                 <label class="form-label" for="lastname">Surname</label>
                                 <input type="text" id="lastname" name="lastname" class="form-control form-control-lg" />
                                 
-                            </div>
+                            </div> -->
           
                             <div class="form-outline mb-4">
                               <label class="form-label" for="password">Password</label>
@@ -64,4 +64,3 @@
             </div>
           </section>
     </main>
-</html>
