@@ -8,8 +8,14 @@ const User = require('../schemas/passportUser.js');
 passport.use(User.createStrategy());
 
 //serialize and deserialize user
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function(){
+        return cb(null, {
+            id:user.id,
+            username: user.username,
+            isAdmin: user.isAdmin
+        })
+    })
 });
 
 passport.deserializeUser(function(user,cb) {
@@ -31,7 +37,7 @@ router.post("/auth/register", async(req, res)=> {
     try{
         //register user
         
-        const registerUser = await User.register({username:req.body.username}, req.body.password);
+        const registerUser = await User.register({username:req.body.username, isAdmin:false}, req.body.password);
         if(registerUser){
             passport.authenticate("local")(req,res, function(){
                 res.redirect("/signIn")
