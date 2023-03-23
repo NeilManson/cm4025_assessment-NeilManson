@@ -42,17 +42,29 @@ app.use('/', authRoute);
 
 //get paths
 app.get("/", function (req, res) {
-    res.redirect("/signIn");
+    if(req.isAuthenticated()){
+        res.redirect("/addQuotes")
+    }else{
+        res.redirect("/signIn");
+    }
   });
   
 //signin page
 app.get("/signIn", function(req, res){
-    res.render("login")
+    if(req.isAuthenticated()){
+        res.redirect("/addQuotes")
+    }else{
+        res.render("login")
+    }
 });
 
 //Registration page
 app.get("/register", function(req, res){
-    res.render("register")
+    if(req.isAuthenticated()){
+        res.redirect("/addQuotes")
+    }else{
+        res.render("register")
+    }
 });
 
 app.get("/addQuotes", function(req, res){
