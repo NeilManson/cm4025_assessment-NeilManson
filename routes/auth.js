@@ -34,7 +34,7 @@ router.post("/auth/register", async(req, res)=> {
         const registerUser = await User.register({username:req.body.username}, req.body.password);
         if(registerUser){
             passport.authenticate("local")(req,res, function(){
-                res.redirect("/addQuotes")
+                res.redirect("/signIn")
             });
         }else{
             res.redirect("/register");
@@ -64,8 +64,10 @@ router.post("/auth/login", async(req,res)=>{
 
 router.get("/auth/logout", (req, res)=>{
     //use passport logout method
-    req.logout();
-    res.redirect("/signIn")
+    req.logout(function(err){
+        if(err) {return next(err);}
+        res.redirect("/signIn")
+    });
 })
 
 
