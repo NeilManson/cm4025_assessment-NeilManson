@@ -5,3 +5,20 @@
         <title>Profile</title>
     </head>
     <%- include('../partials/nav') %>
+    <main>
+        <% events.forEach(function (quote) { %>
+            <div class="card" id="quote_card">
+                <div class="card-header">
+                    <h5 class="card-title"><%= quote.quoteName %></h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">created by: <%= quote.user %></p>
+                    <p class="card-text">Quote Cost: <%= quote.finalCost %></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><%= quote.hourRate %></li>
+                    <li class="list-group-item"><%= quote.hours %></li>
+                </ul>
+            </div>
+        <% }); %>
+    </main>
