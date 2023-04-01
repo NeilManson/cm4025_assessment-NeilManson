@@ -1,0 +1,18 @@
+.page{
+    background-color:lightblue;
+    padding:30px;
+}
+/* add quotes page css */
+#create-quote{
+    background-color: white;
+    padding: 10px;
+    border-radius:25px;
+}
+#additional-costs{
+    background-color: lightgray; 
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    
+}
