@@ -4,12 +4,12 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs")
-const passport = require("passport")
+const passport = require("passport");
 //const User = require("./schemas/User.js")
 
 //routes
-const authRoute = require("./routes/auth.js")
-
+const authRoute = require("./routes/auth.js");
+const quoteRoute = require("./routes/quotes.js");
 
 const app = express()
 const PORT = process.env.PORT
@@ -39,6 +39,7 @@ mongoose.connect(process.env.DB_URL)
 mongoose.set('strictQuery', true)
 //use routes
 app.use('/', authRoute);
+app.use('/', quoteRoute);
 
 //get paths
 app.get("/", function (req, res) {
