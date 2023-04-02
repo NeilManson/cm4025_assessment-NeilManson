@@ -68,7 +68,12 @@ app.get("/register", function(req, res){
 });
 
 app.get("/addQuotes", function(req, res){
-  res.render("addQuotes")
+    if(req.isAuthenticated()){
+        res.render("addQuotes")
+    }else{
+        res.redirect("/signIn")
+    }
+  
 })
 
 // 404 page
