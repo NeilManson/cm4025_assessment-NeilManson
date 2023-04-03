@@ -19,7 +19,7 @@ function calculateQuote(input){
     // take user rates from .env file
     const sRate = seniorRate;
     const jRate = juniorRate;
-    const trate = trainingRate;
+    const tRate = trainingRate;
     //initialize final cost value
     var finalCost = 0;
 
