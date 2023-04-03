@@ -1,19 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <%- include('../partials/head') %>
-        <title>Profile</title>
+
+        <%- include('./partials/head') %>
+        <title>Quotes Page</title>
     </head>
-    <%- include('../partials/nav') %>
+    <%- include('./partials/nav') %>
     <main>
-        <% events.forEach(function (quote) { %>
-            <div class="card" id="quote_card">
+        <section class="vh-100 page">
+        <% allQuotes.forEach(function (quote) { %>
+            <div class="card" id="quote-card">
                 <div class="card-header">
                     <h5 class="card-title"><%= quote.quoteName %></h5>
                 </div>
                 <div class="card-body">
                     <p class="card-text">created by: <%= quote.user %></p>
-                    <p class="card-text">Quote Cost: <%= quote.finalCost %></p>
+                    <p class="card-text">Quote Cost: <%= "£" + quote.finalQuote.toFixed(2) %></p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><%= quote.hourRate %></li>
@@ -21,4 +20,5 @@
                 </ul>
             </div>
         <% }); %>
+    </section>
     </main>
