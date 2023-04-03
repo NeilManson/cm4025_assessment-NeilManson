@@ -2,24 +2,33 @@
 const router = require('express').Router();
 
 const Quote = require('../schemas/Quote.js');
+
+//quote calculator
 const quoteCalculator = require('../public/js/quote_calculator.js');
 
 
 
-//quote calculator
 
 
+// get routes
+app.get("/addQuotes", function (req, res) {
+    if (req.isAuthenticated()) {
+        res.render("addQuotes")
+    } else {
+        res.redirect("/signIn")
+    }
+
+})
 
 router.get("/quotes", async (req, res) => {
     if (req.isAuthenticated()) {
         try {
             if (req.user.isAdmin) {
                 const allQuotes = await Quote.find();
-                
+
                 res.render("quotes", { allQuotes, isAuth: req.isAuthenticated() });
             } else {
                 const allQuotes = await Quote.find({ user: req.user.username });
-                console.log(allQuotes);
                 res.render("quotes", { allQuotes, isAuth: req.isAuthenticated() });
             }
         } catch (err) {
@@ -30,6 +39,13 @@ router.get("/quotes", async (req, res) => {
     }
 })
 
+router.get("/editQuotes", async (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render("editQuotes", { quote, isAuth: req.isAuthenticated() });
+    } else {
+        res.redirect("signIn")
+    }
+})
 // post routes
 router.post("/addQuote", async (req, res) => {
     try {

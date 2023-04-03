@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 app.use(session({
-    secret: "SESSION",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
 }))
@@ -34,8 +34,8 @@ app.use(passport.session());
 
 //database stuff
 mongoose.connect(process.env.DB_URL)
-.then(()=> console.log("database connected"))
-.catch(err => console.log("err"))
+    .then(() => console.log("database connected"))
+    .catch(err => console.log("err"))
 mongoose.set('strictQuery', true)
 //use routes
 app.use('/', authRoute);
@@ -43,45 +43,38 @@ app.use('/', quoteRoute);
 
 //get paths
 app.get("/", function (req, res) {
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         res.redirect("/addQuotes")
-    }else{
+    } else {
         res.redirect("/signIn");
     }
-  });
-  
+});
+
 //signin page
-app.get("/signIn", function(req, res){
-    if(req.isAuthenticated()){
+app.get("/signIn", function (req, res) {
+    if (req.isAuthenticated()) {
         res.redirect("/addQuotes")
-    }else{
+    } else {
         res.render("login")
     }
 });
 
 //Registration page
-app.get("/register", function(req, res){
-    if(req.isAuthenticated()){
+app.get("/register", function (req, res) {
+    if (req.isAuthenticated()) {
         res.redirect("/addQuotes")
-    }else{
+    } else {
         res.render("register")
     }
 });
 
-app.get("/addQuotes", function(req, res){
-    if(req.isAuthenticated()){
-        res.render("addQuotes")
-    }else{
-        res.redirect("/signIn")
-    }
-  
-})
+
 
 // 404 page
-app.use(function ( req, res, next) {
+app.use(function (req, res, next) {
     res.send('This page does not exist!')
 });
 
 app.listen(PORT, function () {
-    console.log('Listening on http://localhost:'+PORT+'/');
+    console.log('Listening on http://localhost:' + PORT + '/');
 });
