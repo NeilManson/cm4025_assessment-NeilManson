@@ -6,8 +6,8 @@ const QuoteSchema= new mongoose.Schema({
     user: String,
     hourRate: String,
     hours:Number ,
-    physicalCost: {type: Array, "default":[]},
-    softwareCost: {type: Array, "default":[]},
+    physicalCost: {type: Array, "number":[]},
+    softwareCost: {type: Array, "number":[]},
     finalQuote: Number
 });
 
