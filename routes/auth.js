@@ -32,8 +32,6 @@ passport.deserializeUser(function(id, done) {
 
 // register user in db
 router.post("/auth/register", async(req, res)=> {
-    console.log(req.body.username)
-    console.log(req.body.password)
     try{
         //register user
         
