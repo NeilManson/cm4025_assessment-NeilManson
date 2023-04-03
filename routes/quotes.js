@@ -11,7 +11,7 @@ const quoteCalculator = require('../public/js/quote_calculator.js');
 
 
 // get routes
-app.get("/addQuotes", function (req, res) {
+router.get("/addQuotes", function (req, res) {
     if (req.isAuthenticated()) {
         res.render("addQuotes")
     } else {
