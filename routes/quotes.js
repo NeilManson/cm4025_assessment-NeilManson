@@ -11,13 +11,15 @@ const quoteCalculator = require('../public/js/quote_calculator.js');
 
 
 router.get("/quotes", async (req, res) => {
-    if (req.user.isAuthenticated) {
+    if (req.isAuthenticated()) {
         try {
             if (req.user.isAdmin) {
                 const allQuotes = await Quote.find();
+                
                 res.render("quotes", { allQuotes, isAuth: req.isAuthenticated() });
             } else {
-                const allQuotes = await Quote.find({ user: req.username });
+                const allQuotes = await Quote.find({ user: req.user.username });
+                console.log(allQuotes);
                 res.render("quotes", { allQuotes, isAuth: req.isAuthenticated() });
             }
         } catch (err) {
@@ -28,6 +30,7 @@ router.get("/quotes", async (req, res) => {
     }
 })
 
+// post routes
 router.post("/addQuote", async (req, res) => {
     try {
         const quoteValue = quoteCalculator.calculateQuote(req.body);
@@ -40,6 +43,10 @@ router.post("/addQuote", async (req, res) => {
             softwareCost: req.body.softwareCost,
             finalQuote: quoteValue
         })
+        //save quote to db
+        const saveQuote = quote.save();
+        //redirect to quotes page if quote save is successful
+        res.redirect('/quotes');
     } catch (err) {
         res.send(err);
     }
