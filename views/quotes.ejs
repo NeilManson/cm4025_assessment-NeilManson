@@ -18,6 +18,15 @@
                     <li class="list-group-item"><%= quote.hourRate %></li>
                     <li class="list-group-item"><%= quote.hours %></li>
                 </ul>
+                <div class="row interact-row">
+                    <div class="col button-col">
+                        <a href="/editQuotes/<%= quote.quoteName%>"> edit</a>
+                    </div>
+                    <div class="col button-col">
+                        <button>Delete</button>
+                    </div>
+
+                </div>
             </div>
         <% }); %>
     </section>
