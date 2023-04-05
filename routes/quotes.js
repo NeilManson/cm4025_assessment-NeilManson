@@ -52,6 +52,19 @@ router.get("/editQuotes/:name", async (req, res) => {
         console.log("err")
     }
 })
+
+// route to delete quote from db
+router.get("/deleteQuote/:name", async (req, res) => {
+    if(req.isAuthenticated()) {
+        try{
+            const quoteToDelete = await Quote.findOneAndDelete({ quoteName: req.params.name});
+            res.redirect("/quotes");
+        }catch(err){
+            res.send(err);
+        }
+    }
+})
+
 // post routes
 
 //route to add quote to db
