@@ -24,7 +24,7 @@ function calculateQuote(input){
     var finalCost = 0;
 
     if(rate == "senior"){
-        finalCost = hours * (sRate*fudge) + softwareCost.reduce(function(acc, val) { return acc + val;}, 0) + hardwareCost.reduce(function(acc, val) { return acc + val;}, 0);
+        finalCost = hours * (sRate*fudge) + softwareCost + hardwareCost;
     }else if(rate == "junior"){
         finalCost = hours * (jRate*fudge) + softwareCost + hardwareCost;
     }else{
