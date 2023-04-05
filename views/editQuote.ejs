@@ -7,7 +7,7 @@
       <div class="container form-group">
 
 
-        <form id="create-quote" action="/editQuote" method="POST">
+        <form id="create-quote" action="/editQuote/<%= quoteToEdit.quoteName%>" method="POST">
           <h2 class="default-header">Calculate a quote</h2>
           <div class="form-group">
             <label for="quote-name">Quote Name</label>

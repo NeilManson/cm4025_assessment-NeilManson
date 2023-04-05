@@ -53,6 +53,8 @@ router.get("/editQuotes/:name", async (req, res) => {
     }
 })
 // post routes
+
+//route to add quote to db
 router.post("/addQuote", async (req, res) => {
     try {
         const quoteValue = quoteCalculator.calculateQuote(req.body);
@@ -70,6 +72,26 @@ router.post("/addQuote", async (req, res) => {
         //redirect to quotes page if quote save is successful
         res.redirect('/quotes');
     } catch (err) {
+        res.send(err);
+    }
+})
+
+//route to update quote in db
+router.post('/editQuote/:name', async (req, res) => {
+    try {
+        const quoteValue = quoteCalculator.calculateQuote(req.body)
+        const quote = {
+            quoteName: req.body.quoteName,
+            user: req.user.username,
+            hourRate: req.body.employeeType,
+            hours: req.body.hours,
+            physicalCost: req.body.physicalCost,
+            softwareCost: req.body.softwareCost,
+            finalQuote: quoteValue
+        };
+        const update = await Quote.findOneAndUpdate({quoteName: req.params.name}, quote)
+        res.redirect("/quotes");
+    }catch(err){
         res.send(err);
     }
 })
