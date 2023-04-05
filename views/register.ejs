@@ -1,54 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Register</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    </head>
-    <main>
-        <!-- bootstrap template from https://mdbootstrap.com/docs/standard/extended/login/#section-4-->
-        <section class="vh-100" style="background-color: lightblue">
-            <div class="container py-5 h-100">
-              <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col col-xl-10">
-                  <div class="card" style="border-radius: 1rem;">
-                    <div class="row g-0">
-                      <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                        <div class="card-body p-4 p-lg-5 text-black">
-          
-                          <form id="signInForm" action="/auth/register" method="POST">
-          
-                            <div class="d-flex align-items-center mb-3 pb-1">
-                              <i class="fas fa-cubes fa-2x me-3" style="color: black;"></i>
-                              <span class="h1 fw-bold mb-0">Neil's EWS Quotes Register</span>
-                            </div>
-          
-                            <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register an account</h5>
-          
-                            <div class="form-outline mb-4">
-                              <label class="form-label" for="email">Email address</label>
-                              <input type="email" id="email" name="username" class="form-control form-control-lg" />
-                              
-                            </div>
-          
-                            <div class="form-outline mb-4">
-                              <label class="form-label" for="password">Password</label>
-                              <input type="password" id="password" name ="password" class="form-control form-control-lg" />
-                              
-                            </div>
 
-                            
-          
-                            <div class="pt-1 mb-4">
-                              <button class="btn btn-dark btn-lg btn-block" type="submit">Register</button>
-                            </div>
-                          </form>
-          
-                        </div>
-                      </div>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<main>
+  <!-- bootstrap template from https://mdbootstrap.com/docs/standard/extended/login/#section-4-->
+  <section class="vh-100" style="background-color: lightblue">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+
+                  <form id="signInForm" action="/auth/register" method="POST">
+
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <i class="fas fa-cubes fa-2x me-3" style="color: black;"></i>
+                      <span class="h1 fw-bold mb-0">Neil's EWS Quotes Register</span>
                     </div>
-                  </div>
+
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register an account</h5>
+
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="email">Email address</label>
+                      <input type="email" id="email" name="username" class="form-control form-control-lg" required />
+
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="password">Password</label>
+                      <input type="password" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        class="form-control form-control-lg" required />
+                    </div>
+                    
+
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block" type="submit">Register</button>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+              <div class="col">
+                <div id="message">
+                  <h3>Password must contain the following:</h3>
+                  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                  <p id="number" class="invalid">A <b>number</b></p>
+                  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
                 </div>
               </div>
             </div>
-          </section>
-    </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    var myInput = document.getElementById("password");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+
+    // When the user clicks on the password field, show the message box
+    myInput.onfocus = function () {
+      document.getElementById("message").style.display = "block";
+    }
+
+    // When the user clicks outside of the password field, hide the message box
+    myInput.onblur = function () {
+      document.getElementById("message").style.display = "none";
+    }
+
+    // When the user starts to type something inside the password field
+myInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+}
+
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+  </script>
+</main>
