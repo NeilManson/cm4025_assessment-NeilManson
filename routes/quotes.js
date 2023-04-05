@@ -39,11 +39,17 @@ router.get("/quotes", async (req, res) => {
     }
 })
 
-router.get("/editQuotes", async (req, res) => {
+// route to render editQuote page with values from the DB
+router.get("/editQuotes/:name", async (req, res) => {
     if (req.isAuthenticated()) {
-        res.render("editQuotes", { quote, isAuth: req.isAuthenticated() });
+        try {
+            const quoteToEdit = await Quote.findOne({ quoteName: req.params.name });
+            res.render("editQuote", { quoteToEdit, isAuth: req.isAuthenticated() });
+        } catch (err) {
+            res.send(err);
+        }
     } else {
-        res.redirect("signIn")
+        console.log("err")
     }
 })
 // post routes
@@ -67,5 +73,7 @@ router.post("/addQuote", async (req, res) => {
         res.send(err);
     }
 })
+
+
 
 module.exports = router

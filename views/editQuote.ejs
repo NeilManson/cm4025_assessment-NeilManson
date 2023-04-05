@@ -1,0 +1,62 @@
+<%- include('./partials/head') %>
+  <title>Quote Calclulater</title>
+  </head>
+  <%- include('./partials/nav') %>
+
+    <section class="vh-100 page">
+      <div class="container form-group">
+
+
+        <form id="create-quote" action="/editQuote" method="POST">
+          <h2 class="default-header">Calculate a quote</h2>
+          <div class="form-group">
+            <label for="quote-name">Quote Name</label>
+            <input type="text" class="form-control" id="quote-name" name="quoteName" value="<%- quoteToEdit.quoteName %>">
+          </div>
+          <div class="form-group">
+            <label for="employee-type">Employee Type</label>
+            <select id="employee-type" name="employeeType">
+              <option value="senior">Senior</option>
+              <option value="junior">Junior</option>
+              <option valuie="trainee">Trainee</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="hours">Hours</label>
+            <input type="number" min="0" class="form-control" id="hours" name="hours" value="<%- quoteToEdit.hours %>">
+          </div>
+
+          <div class="container" id="additional-costs">
+            <div class="form-group">
+              <label for="add_cost">Add additional costs</label>
+              <div id="addResources">
+                <div onclick="showDiv()" class="btn btn btn-success">Add</div>
+              </div>
+            </div>
+            <div class="row" id="resources">
+              
+              <div class="col">
+                <% for(var i = 0; i < quoteToEdit.softwareCost.length; i++){ %>
+                <label for="resources">Software</label>
+                <input min="0" name="softwareCost" class="form-control" type="number" value="<%- quoteToEdit.softwareCost[i] %>">
+                <% } %>
+              </div>
+              
+              <div class="col">
+                <% for(var i = 0; i < quoteToEdit.physicalCost.length; i++){ %>
+                <label for="resources">Hardware</label>
+                <input min="0" name="physicalCost" class="form-control" type="number" value="<%- quoteToEdit.physicalCost[i] %>">
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <div class="container" id="submit-button">
+            <button type="submit" class="btn btn-dark btn-lg btn-block">Edit Quote</button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+
+    </html>
