@@ -24,11 +24,6 @@ passport.deserializeUser(function(user,cb) {
     })
 })
 
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function (err, user) {
-        done(err, user);
-    });
-});
 
 // register user in db
 router.post("/auth/register", async(req, res)=> {
@@ -49,22 +44,8 @@ router.post("/auth/register", async(req, res)=> {
 });
 
 // Login user
-router.post("/auth/login", async(req,res)=>{
-    //create new User object
-    const user = new User({
-        username:req.body.username,
-        password:req.body.passport
-    });
-    req.login(user, (err)=>{
-        if(err){
-            console.log(err)
-        }else{
-            passport.authenticate("local")(req,res, function(){
-                res.redirect("/quotes");
-            });
-        }
-    })
-})
+router.post("/auth/login", passport.authenticate('local', {successRedirect:"/", failureRedirect:'/signIn'}));
+
 
 router.get("/auth/logout", (req, res)=>{
     //use passport logout method
