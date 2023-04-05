@@ -60,7 +60,7 @@ router.post("/auth/login", async(req,res)=>{
             console.log(err)
         }else{
             passport.authenticate("local")(req,res, function(){
-                res.redirect("/addQuotes");
+                res.redirect("/quotes");
             });
         }
     })

@@ -44,7 +44,7 @@ app.use('/', quoteRoute);
 //get paths
 app.get("/", function (req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/addQuotes")
+        res.redirect("/quotes")
     } else {
         res.redirect("/signIn");
     }
@@ -53,7 +53,7 @@ app.get("/", function (req, res) {
 //signin page
 app.get("/signIn", function (req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/addQuotes")
+        res.redirect("/quotes")
     } else {
         res.render("login")
     }
@@ -62,7 +62,7 @@ app.get("/signIn", function (req, res) {
 //Registration page
 app.get("/register", function (req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/addQuotes")
+        res.redirect("/quotes")
     } else {
         res.render("register")
     }
