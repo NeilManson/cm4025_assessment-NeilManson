@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 const QuoteSchema= new mongoose.Schema({
-    quoteName: String,
+    quoteName: {type:String, unique:true,},
     user: String,
     hourRate: String,
     hours:Number ,
