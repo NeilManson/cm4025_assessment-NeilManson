@@ -50,6 +50,7 @@ router.get("/editQuotes/:name", async (req, res) => {
         }
     } else {
         console.log("err")
+        res.redirect("/signIn")
     }
 })
 
@@ -62,6 +63,10 @@ router.get("/deleteQuote/:name", async (req, res) => {
         }catch(err){
             res.send(err);
         }
+    }
+    else{
+        console.log("err");
+        res.redirect("/signIn")
     }
 })
 
