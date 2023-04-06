@@ -24,19 +24,31 @@ function calculateQuote(input) {
     var finalCost = 0;
     if (Array.isArray(softwareCost)) {
         if (rate == "senior") {
-            finalCost = (hours * (sRate * fudge)) + softwareCost.reduce((a, b) => a + b, 0) + hardwareCost.reduce((a, b) => a + b, 0);
+            finalCost = (hours * (sRate * fudge))
+            finalCost += softwareCost.reduce((a, b) => Number(a) + Number(b), 0)
+            finalCost += hardwareCost.reduce((a, b) => Number(a) + Number(b), 0);
         } else if (rate == "junior") {
-            finalCost = (hours * (jRate * fudge)) + softwareCost.reduce((a, b) => a + b, 0) + hardwareCost.reduce((a, b) => a + b, 0);
+            finalCost = (hours * (jRate * fudge))
+            finalCost += softwareCost.reduce((a, b) => Number(a) + Number(b), 0)
+            finalCost += hardwareCost.reduce((a, b) => Number(a) + Number(b), 0);
         } else {
-            finalCost = (hours * (tRate * fudge)) + softwareCost.reduce((a, b) => a + b, 0) + hardwareCost.reduce((a, b) => a + b, 0);
+            finalCost = (hours * (tRate * fudge))
+            finalCost += softwareCost.reduce((a, b) => Number(a) + Number(b), 0);
+            finalCost += hardwareCost.reduce((a, b) => Number(a) + Number(b), 0);
         }
     } else {
         if (rate == "senior") {
-            finalCost = (hours * (sRate * fudge)) + softwareCost + hardwareCost;
+            finalCost = (hours * (sRate * fudge))
+            finalCost += Number(softwareCost);
+            finalCost += Number(hardwareCost);
         } else if (rate == "junior") {
-            finalCost = (hours * (jRate * fudge)) + softwareCost + hardwareCost;
+            finalCost = (hours * (jRate * fudge))
+            finalCost += Number(softwareCost);
+            finalCost += Number(hardwareCost);
         } else {
-            finalCost = (hours * (tRate * fudge)) + softwareCost + hardwareCost;
+            finalCost = (hours * (tRate * fudge));
+            finalCost += Number(softwareCost);
+            finalCost += Number(hardwareCost);
         }
     }
     return finalCost;
