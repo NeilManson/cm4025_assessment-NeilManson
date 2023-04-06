@@ -12,6 +12,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">created by: <%= quote.user %></p>
+                    <h1 class="card-text">Quote calculated by: <p class="card-text">hours * hourly rate + physical costs + software costs</p> </h1> 
                     <p class="card-text">Quote Cost: <%= "£" + quote.finalQuote.toFixed(2) %></p>
                 </div>
                 <ul class="list-group list-group-flush">
