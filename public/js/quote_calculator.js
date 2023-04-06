@@ -1,14 +1,14 @@
 require("dotenv").config();
 const seniorRate = process.env.SENIOR;
 const juniorRate = process.env.JUNIOR;
-const trainingRate = process.env.TRAINING; 
+const trainingRate = process.env.TRAINING;
 
 // function to create a random fudge number
 function randomNumber(min, max) {
     return Math.random() * (max - min) + min;
-  }
+}
 
-function calculateQuote(input){
+function calculateQuote(input) {
     //create a fudge value between 0.5 and 1.25
     const fudge = randomNumber(0.5, 1.25);
     //get the values from input which is equivalent to req.body
@@ -22,13 +22,22 @@ function calculateQuote(input){
     const tRate = trainingRate;
     //initialize final cost value
     var finalCost = 0;
-
-    if(rate == "senior"){
-        finalCost = (hours * (sRate*fudge)) + softwareCost + hardwareCost;
-    }else if(rate == "junior"){
-        finalCost = (hours * (jRate*fudge)) + softwareCost + hardwareCost;
-    }else{
-        finalCost = (hours * (tRate*fudge)) + softwareCost + hardwareCost;
+    if (Array.isArray(softwareCost)) {
+        if (rate == "senior") {
+            finalCost = (hours * (sRate * fudge)) + softwareCost.reduce((a, b) => a + b, 0) + hardwareCost.reduce((a, b) => a + b, 0);
+        } else if (rate == "junior") {
+            finalCost = (hours * (jRate * fudge)) + softwareCost.reduce((a, b) => a + b, 0) + hardwareCost.reduce((a, b) => a + b, 0);
+        } else {
+            finalCost = (hours * (tRate * fudge)) + softwareCost.reduce((a, b) => a + b, 0) + hardwareCost.reduce((a, b) => a + b, 0);
+        }
+    } else {
+        if (rate == "senior") {
+            finalCost = (hours * (sRate * fudge)) + softwareCost + hardwareCost;
+        } else if (rate == "junior") {
+            finalCost = (hours * (jRate * fudge)) + softwareCost + hardwareCost;
+        } else {
+            finalCost = (hours * (tRate * fudge)) + softwareCost + hardwareCost;
+        }
     }
     return finalCost;
 }
