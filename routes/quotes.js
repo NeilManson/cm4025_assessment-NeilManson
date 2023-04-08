@@ -20,13 +20,22 @@ router.get("/addQuotes", function (req, res) {
 
 })
 
+router.get("/addQuotesAdmin", function (req, res) {
+    if (req.isAuthenticated()) {
+        res.render("addQuotesAdmin")
+    } else {
+        res.redirect("/signIn")
+    }
+
+})
+
 router.get("/quotes", async (req, res) => {
     if (req.isAuthenticated()) {
         try {
             if (req.user.isAdmin) {
                 const allQuotes = await Quote.find();
 
-                res.render("quotes", { allQuotes, isAuth: req.isAuthenticated() });
+                res.render("quotesAdmin", { allQuotes, isAuth: req.isAuthenticated() });
             } else {
                 const allQuotes = await Quote.find({ user: req.user.username });
                 res.render("quotes", { allQuotes, isAuth: req.isAuthenticated() });
@@ -54,17 +63,35 @@ router.get("/editQuotes/:name", async (req, res) => {
     }
 })
 
+router.get("/editQuotesAdmin/:name", async (req, res) => {
+    if (req.isAuthenticated()) {
+        if (req.user.isAdmin) {
+            try {
+                const quoteToEdit = await Quote.findOne({ quoteName: req.params.name });
+                res.render("editQuoteAdmin", { quoteToEdit, isAuth: req.isAuthenticated() });
+            } catch (err) {
+                res.send(err);
+            }
+        } else {
+            res.send("not admin")
+        }
+    } else {
+        console.log("err")
+        res.redirect("/signIn")
+    }
+})
+
 // route to delete quote from db
 router.get("/deleteQuote/:name", async (req, res) => {
-    if(req.isAuthenticated()) {
-        try{
-            const quoteToDelete = await Quote.findOneAndDelete({ quoteName: req.params.name});
+    if (req.isAuthenticated()) {
+        try {
+            const quoteToDelete = await Quote.findOneAndDelete({ quoteName: req.params.name });
             res.redirect("/quotes");
-        }catch(err){
+        } catch (err) {
             res.send(err);
         }
     }
-    else{
+    else {
         console.log("err");
         res.redirect("/signIn")
     }
@@ -76,6 +103,29 @@ router.get("/deleteQuote/:name", async (req, res) => {
 router.post("/addQuote", async (req, res) => {
     try {
         const quoteValue = quoteCalculator.calculateQuote(req.body);
+        const quote = new Quote({
+            quoteName: req.body.quoteName,
+            user: req.user.username,
+            hourRate: req.body.employeeType,
+            hours: req.body.hours,
+            physicalCost: req.body.physicalCost,
+            softwareCost: req.body.softwareCost,
+            finalQuote: quoteValue
+        })
+        //save quote to db
+        const saveQuote = quote.save();
+        console.log("saved")
+        //redirect to quotes page if quote save is successful
+        res.redirect('/quotes');
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+// route to add quote with no fudge factor
+router.post("/addQuoteAdmin", async (req, res) => {
+    try {
+        const quoteValue = quoteCalculator.calculateAdminQuote(req.body);
         const quote = new Quote({
             quoteName: req.body.quoteName,
             user: req.user.username,
@@ -100,16 +150,33 @@ router.post('/editQuote/:name', async (req, res) => {
         const quoteValue = quoteCalculator.calculateQuote(req.body)
         const quote = {
             quoteName: req.body.quoteName,
-            user: req.user.username,
             hourRate: req.body.employeeType,
             hours: req.body.hours,
             physicalCost: req.body.physicalCost,
             softwareCost: req.body.softwareCost,
             finalQuote: quoteValue
         };
-        const update = await Quote.findOneAndUpdate({quoteName: req.params.name}, quote)
+        const update = await Quote.findOneAndUpdate({ quoteName: req.params.name }, quote)
         res.redirect("/quotes");
-    }catch(err){
+    } catch (err) {
+        res.send(err);
+    }
+})
+router.post('/editQuoteAdmin/:name', async (req, res) => {
+    try {
+        const quoteValue = quoteCalculator.calculateAdminQuote(req.body)
+        const quote = new Quote({
+            quoteName: req.body.quoteName + " no fudge",
+            user: req.user.username,
+            hourRate: req.body.employeeType,
+            hours: req.body.hours,
+            physicalCost: req.body.physicalCost,
+            softwareCost: req.body.softwareCost,
+            finalQuote: quoteValue
+        });
+        const saveQuote = quote.save();
+        res.redirect("/quotes");
+    } catch (err) {
         res.send(err);
     }
 })
