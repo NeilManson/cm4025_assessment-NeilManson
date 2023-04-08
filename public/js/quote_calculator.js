@@ -54,4 +54,49 @@ function calculateQuote(input) {
     return finalCost;
 }
 
+function calculateAdminQuote(input) {
+    //get the values from input which is equivalent to req.body
+    const hours = input.hours;
+    const rate = input.employeeType;
+    const softwareCost = input.softwareCost;
+    const hardwareCost = input.physicalCost;
+    // take user rates from .env file
+    const sRate = seniorRate;
+    const jRate = juniorRate;
+    const tRate = trainingRate;
+    //initialize final cost value
+    var finalCost = 0;
+    if (Array.isArray(softwareCost)) {
+        if (rate == "senior") {
+            finalCost = (hours * sRate)
+            finalCost += softwareCost.reduce((a, b) => Number(a) + Number(b), 0)
+            finalCost += hardwareCost.reduce((a, b) => Number(a) + Number(b), 0);
+        } else if (rate == "junior") {
+            finalCost = (hours *jRate)
+            finalCost += softwareCost.reduce((a, b) => Number(a) + Number(b), 0)
+            finalCost += hardwareCost.reduce((a, b) => Number(a) + Number(b), 0);
+        } else {
+            finalCost = (hours * tRate)
+            finalCost += softwareCost.reduce((a, b) => Number(a) + Number(b), 0);
+            finalCost += hardwareCost.reduce((a, b) => Number(a) + Number(b), 0);
+        }
+    } else {
+        if (rate == "senior") {
+            finalCost = (hours * sRate)
+            finalCost += Number(softwareCost);
+            finalCost += Number(hardwareCost);
+        } else if (rate == "junior") {
+            finalCost = (hours * jRate)
+            finalCost += Number(softwareCost);
+            finalCost += Number(hardwareCost);
+        } else {
+            finalCost = (hours * tRate);
+            finalCost += Number(softwareCost);
+            finalCost += Number(hardwareCost);
+        }
+    }
+    return finalCost;
+}
+
 exports.calculateQuote = calculateQuote;
+exports.calculateAdminQuote = calculateAdminQuote;

@@ -1,0 +1,34 @@
+
+        <%- include('./partials/head') %>
+        <title>Quotes Page</title>
+    </head>
+    <%- include('./partials/navAdmin') %>
+    <main>
+        <section class="vh-100% page">
+        <% allQuotes.forEach(function (quote) { %>
+            <div class="card" id="quote-card">
+                <div class="card-header">
+                    <h5 class="card-title"><%= quote.quoteName %></h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">created by: <%= quote.user %></p>
+                    <h1 class="card-text">Quote calculated by:  </h1> <p class="card-text" style:inline>hours * hourly rate + physical costs + software costs</p>
+                    <p class="card-text">Quote Cost: <%= "£" + quote.finalQuote.toFixed(2) %></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><%= quote.hourRate %></li>
+                    <li class="list-group-item"><%= quote.hours %></li>
+                </ul>
+                <div class="row interact-row">
+                    <div class="col button-col">
+                        <a href="/editQuotes/<%= quote.quoteName%>"> Edit</a>
+                    </div>
+                    <div class="col button-col">
+                        <a href="/deleteQuote/<%= quote.quoteName%>"> Delete </a>
+                    </div>
+
+                </div>
+            </div>
+        <% }); %>
+    </section>
+    </main>
