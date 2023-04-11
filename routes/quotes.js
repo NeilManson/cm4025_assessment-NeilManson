@@ -101,6 +101,7 @@ router.get("/deleteQuote/:name", async (req, res) => {
 
 //route to add quote to db
 router.post("/addQuote", async (req, res) => {
+    if(req.isAuthenticated()){
     try {
         const quoteValue = quoteCalculator.calculateQuote(req.body);
         const quote = new Quote({
@@ -114,12 +115,15 @@ router.post("/addQuote", async (req, res) => {
         })
         //save quote to db
         const saveQuote = quote.save();
-        console.log("saved")
         //redirect to quotes page if quote save is successful
         res.redirect('/quotes');
     } catch (err) {
         res.send(err);
     }
+    }else{
+        res.redirect("/signIn")
+    }
+
 })
 
 // route to add quote with no fudge factor
